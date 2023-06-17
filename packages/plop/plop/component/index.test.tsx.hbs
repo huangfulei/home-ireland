@@ -1,0 +1,17 @@
+import { render, RenderResult } from '@testing-library/react';
+import * as React from 'react';
+
+import { {{properCase name}} } from '.';
+
+describe('{{properCase name}}', () => {
+    let rendered: RenderResult;
+    const mockProps = {};
+
+    beforeEach(() => {
+        rendered = render(<{{properCase name}} {...mockProps} />);
+    });
+
+    it('renders as expected', () => {
+        expect(rendered.container).toMatchSnapshot();
+    });
+});

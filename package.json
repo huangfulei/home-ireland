@@ -2,7 +2,7 @@
   "name": "create-t3-turbo",
   "private": true,
   "engines": {
-    "node": ">=v18.16.0"
+    "node": ">=v18.15.0"
   },
   "packageManager": "pnpm@8.6.0",
   "scripts": {
@@ -12,6 +12,7 @@
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push db:generate",
     "db:studio": "pnpm -F db dev",
+    "gen": "plop --plopfile ./packages/plop/plopfile.js",
     "dev": "turbo dev --parallel",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",
     "lint": "turbo lint && manypkg check",
@@ -19,7 +20,8 @@
     "type-check": "turbo type-check"
   },
   "dependencies": {
-    "@acme/eslint-config": "^0.1.0",
+    "@packages/eslint-config": "^0.1.0",
+    "@packages/plop": "^0.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
     "@manypkg/cli": "^0.20.0",
     "@types/prettier": "^2.7.3",
