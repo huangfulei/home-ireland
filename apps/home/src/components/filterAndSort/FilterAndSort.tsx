@@ -12,16 +12,15 @@ import { type IFilterAndSortProps } from ".";
 export const FilterAndSort: React.FC<IFilterAndSortProps> = (props) => {
   const { categories, selectedCat, onCatClick } = props;
   return (
-    <VStack>
-      <HStack
-        className={"flex-wrap items-center justify-center space-x-2 space-y-1"}
-      >
+    <VStack className={"sticky top-0 z-30 bg-base-100 bg-opacity-90"}>
+      <HStack className={"flex-wrap items-center justify-center"}>
         {categories.map((category) => (
           <Button
             key={category.id}
             onClick={() => onCatClick(category.category)}
             className={cn(
               selectedCat.includes(category.category) ? "" : "btn-ghost",
+              "mx-2 my-1",
             )}
           >
             {category.category}

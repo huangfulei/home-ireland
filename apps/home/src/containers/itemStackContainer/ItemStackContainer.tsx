@@ -65,39 +65,41 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
       onReturnClick={handleReturn}
     />
   ) : (
-    <Container
-      className={cn(
-        `${BodyHeightMobile} md:${BodyHeight}`,
-        "overflow-y-auto py-1",
-      )}
-    >
-      <VStack className={"h-full justify-between space-y-2"}>
-        <FilterAndSort
-          categories={categories}
-          onCatClick={onCatClick}
-          selectedCat={selectedCat}
-        />
-        <VStack className={"space-y-2"}>
-          <Grid className="grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-            {filteredItems?.map((item) => (
-              <VStack key={item.id}>
-                {/*<Link href={`/items/${item.id}`}>*/}
-                <ItemCard item={item} />
-                {/*</Link>*/}
-              </VStack>
-            ))}
-          </Grid>
+    <>
+      <FilterAndSort
+        categories={categories}
+        onCatClick={onCatClick}
+        selectedCat={selectedCat}
+      />
+      <Container
+        className={cn(
+          `${BodyHeightMobile} md:${BodyHeight}`,
+          "overflow-y-auto py-1",
+        )}
+      >
+        <VStack className={"h-full justify-between space-y-2"}>
+          <VStack className={"space-y-2"}>
+            <Grid className="grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+              {filteredItems?.map((item) => (
+                <VStack key={item.id}>
+                  {/*<Link href={`/items/${item.id}`}>*/}
+                  <ItemCard item={item} />
+                  {/*</Link>*/}
+                </VStack>
+              ))}
+            </Grid>
+          </VStack>
+          {/*<VStack*/}
+          {/*  className={cn(*/}
+          {/*    "relative w-full items-center space-y-2 py-3",*/}
+          {/*    false ? "" : "hidden",*/}
+          {/*  )}*/}
+          {/*>*/}
+          {/*  <Box className="h-8 w-8 animate-pulse rounded-full border-4 border-primary" />*/}
+          {/*  <Text className={"text-sm"}>正在拼命加载。。。</Text>*/}
+          {/*</VStack>*/}
         </VStack>
-        {/*<VStack*/}
-        {/*  className={cn(*/}
-        {/*    "relative w-full items-center space-y-2 py-3",*/}
-        {/*    false ? "" : "hidden",*/}
-        {/*  )}*/}
-        {/*>*/}
-        {/*  <Box className="h-8 w-8 animate-pulse rounded-full border-4 border-primary" />*/}
-        {/*  <Text className={"text-sm"}>正在拼命加载。。。</Text>*/}
-        {/*</VStack>*/}
-      </VStack>
-    </Container>
+      </Container>
+    </>
   );
 };
