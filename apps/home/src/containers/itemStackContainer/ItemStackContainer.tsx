@@ -10,9 +10,11 @@ import { useEffect, useState } from "react";
 import { EmptyPage } from "@/components/emptyPage";
 import { FilterAndSort } from "@/components/filterAndSort";
 import { ItemCard } from "@/components/itemCard";
+import { ItemDetailModal } from "@/components/itemDetailModal";
 import { BodyHeight, BodyHeightMobile } from "@/constants";
 import { useSearchStore } from "@/context/useSearchStore";
 import { type ItemWithId } from "@/models/Item";
+import { useDisclosure } from "@packages/hooks";
 
 import { type IItemStackContainerProps } from ".";
 
@@ -28,7 +30,8 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
   const { setSearchTerm } = useSearchStore();
   const [selectedCat, setSelectedCat] = useState<string[]>([]);
   const [filteredItems, setFilteredItems] = useState<ItemWithId[]>([]);
-
+  const [selectedItem, setSelectedItem] = useState<ItemWithId>();
+  const { open, isOpen, toggle } = useDisclosure();
   const handleReturn = () => {
     setSearchTerm("");
   };
@@ -40,6 +43,17 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
     } else {
       setSelectedCat([...selectedCat.filter((category) => category !== cat)]);
     }
+  };
+
+  const onItemClick = (item: ItemWithId) => {
+    setSelectedItem(item);
+  };
+
+  const onToggle = (open: boolean) => {
+    if (!open) {
+      setSelectedItem(undefined);
+    }
+    toggle(open);
   };
 
   useEffect(() => {
@@ -54,6 +68,12 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
       setFilteredItems(items);
     }
   }, [selectedCat]);
+
+  useEffect(() => {
+    if (selectedItem) {
+      open();
+    }
+  }, [selectedItem]);
 
   useEffect(() => {
     setFilteredItems(items);
@@ -71,6 +91,7 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
         onCatClick={onCatClick}
         selectedCat={selectedCat}
       />
+
       <Container
         className={cn(
           `${BodyHeightMobile} md:${BodyHeight}`,
@@ -78,26 +99,20 @@ export const ItemStackContainer: React.FC<IItemStackContainerProps> = (
         )}
       >
         <VStack className={"h-full justify-between space-y-2"}>
-          <VStack className={"space-y-2"}>
-            <Grid className="grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-              {filteredItems?.map((item) => (
-                <VStack key={item.id}>
-                  {/*<Link href={`/items/${item.id}`}>*/}
-                  <ItemCard item={item} />
-                  {/*</Link>*/}
-                </VStack>
-              ))}
-            </Grid>
-          </VStack>
-          {/*<VStack*/}
-          {/*  className={cn(*/}
-          {/*    "relative w-full items-center space-y-2 py-3",*/}
-          {/*    false ? "" : "hidden",*/}
-          {/*  )}*/}
-          {/*>*/}
-          {/*  <Box className="h-8 w-8 animate-pulse rounded-full border-4 border-primary" />*/}
-          {/*  <Text className={"text-sm"}>正在拼命加载。。。</Text>*/}
-          {/*</VStack>*/}
+          <Grid className="grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+            {filteredItems?.map((item) => (
+              <VStack key={item.id}>
+                {/*<Link href={`/items/${item.id}`}>*/}
+                <ItemCard item={item} onItemClick={onItemClick} />
+                {/*</Link>*/}
+              </VStack>
+            ))}
+          </Grid>
+          <ItemDetailModal
+            item={selectedItem}
+            isOpen={isOpen}
+            toggle={onToggle}
+          />
         </VStack>
       </Container>
     </>

@@ -10,11 +10,12 @@ import { ImageSlider } from "../imageSlider";
  * @returns Header with component name.
  */
 export const ItemCard: React.FC<IItemCardProps> = (props) => {
-  const { item } = props;
+  const { item, onItemClick } = props;
   return (
     <VStack
       key={item.id}
       className="relative h-full w-full rounded-xl shadow-md"
+      onClick={() => onItemClick(item)}
     >
       {item.itemImages && <ImageSlider images={item.itemImages} />}
       <VStack className="h-full justify-between space-y-2 p-4">
