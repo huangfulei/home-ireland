@@ -1,4 +1,8 @@
+"use client";
+
 import * as React from "react";
+import { useRouter } from "next/navigation";
+import { ImageSlider } from "@/components/imageSlider";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +13,6 @@ import {
 } from "@packages/ui";
 
 import { type IItemDetailModalProps } from ".";
-import { ImageSlider } from "../imageSlider";
 
 /**
  * ItemDetailModal component.
@@ -17,12 +20,16 @@ import { ImageSlider } from "../imageSlider";
  * @returns Header with component name.
  */
 export const ItemDetailModal: React.FC<IItemDetailModalProps> = (props) => {
-  const { item, isOpen, toggle } = props;
+  const { item } = props;
+  const router = useRouter();
+
   return (
     <Dialog
-      open={isOpen}
+      open={true}
       onOpenChange={(open: boolean) => {
-        toggle(open);
+        if (!open) {
+          router.back();
+        }
       }}
     >
       <DialogContent className="sm:max-w-[425px] md:max-w-[850]">
@@ -35,7 +42,7 @@ export const ItemDetailModal: React.FC<IItemDetailModalProps> = (props) => {
           {/*</DialogDescription>*/}
         </DialogHeader>
         {item ? (
-          <VStack className={"my-2 space-y-2"}>
+          <VStack className={"mb-2 space-y-2"}>
             {item.itemImages && <ImageSlider images={item.itemImages} />}
             <Text className={"font-bold"}>{item.name}</Text>
             <Text className={"max-h-[50vh] overflow-auto break-all text-sm"}>

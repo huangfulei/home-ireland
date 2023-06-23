@@ -15,7 +15,7 @@ export const ItemCard: React.FC<IItemCardProps> = (props) => {
     <VStack
       key={item.id}
       className="relative h-full w-full rounded-xl shadow-md"
-      onClick={() => onItemClick(item)}
+      onClick={() => (onItemClick ? onItemClick(item) : undefined)}
     >
       {item.itemImages && <ImageSlider images={item.itemImages} />}
       <VStack className="h-full justify-between space-y-2 p-4">

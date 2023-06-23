@@ -5,6 +5,6 @@ import { type ItemWithId } from "@/models/Item";
  */
 export interface IItemDetailModalProps {
   item?: ItemWithId;
-  isOpen: boolean;
-  toggle: (isOpen: boolean) => void;
+  isOpen?: boolean;
+  toggle?: (isOpen: boolean) => void;
 }

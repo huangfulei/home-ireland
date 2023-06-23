@@ -5,5 +5,5 @@ import { type ItemWithId } from "@/models/Item";
  */
 export interface IItemCardProps {
   item: ItemWithId;
-  onItemClick: (item: ItemWithId) => void;
+  onItemClick?: (item: ItemWithId) => void;
 }

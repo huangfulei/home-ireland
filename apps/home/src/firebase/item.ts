@@ -3,6 +3,7 @@ import { type Category } from "@/models/category";
 import { type ItemWithId } from "@/models/Item";
 import {
   collection,
+  doc,
   getDoc,
   getDocs,
   limit,
@@ -38,4 +39,17 @@ export const getItems = async (
   });
 
   return Promise.all(requests);
+};
+
+export const getItem = async (id: string): Promise<ItemWithId | undefined> => {
+  const docRef = doc(db, "items", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    delete data.categories;
+    return { ...data, id: docSnap.id } as ItemWithId;
+  }
+
+  return undefined;
 };
